@@ -32,7 +32,7 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         try {
             //Write SQL logic here
-            String sql = "change me";
+            String sql = "select * from Book";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -57,10 +57,12 @@ public class BookDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
-            String sql = "change me";
+            String sql = "select * from Book where isbn = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        
 
             //write preparedStatement's setInt method here.
+            preparedStatement.setInt(1, isbn);
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -87,10 +89,24 @@ public class BookDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
-            String sql = "change me" ;
+            int isbn = book.getIsbn();
+            String title = book.getTitle();
+            int copies_available = book.getCopies_available();
+            int author_id = book.getAuthor_id();
+            System.out.println("isbn " + isbn);
+            System.out.println("title is " + title);
+            System.out.println("author id is " + author_id);
+            System.out.println("copies_available is " + copies_available);
+            
+            String sql = "insert into book (isbn, author_id, title,  copies_available ) values(?, ?, ?, ?)" ;
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //write preparedStatement's setString and setInt methods here.
+            preparedStatement.setInt(1, isbn);
+            preparedStatement.setInt(2, author_id);
+            preparedStatement.setString(3, title);
+            preparedStatement.setInt(4, copies_available);
+
 
             preparedStatement.executeUpdate();
             return book;
@@ -109,10 +125,11 @@ public class BookDAO {
         List<Book> books = new ArrayList<>();
         try {
             //Write SQL logic here
-            String sql = "change me";
+            String sql = "select * from Book where copies_available > ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //write preparedStatement's setInt method here.
+            preparedStatement.setInt(1, 0);
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
